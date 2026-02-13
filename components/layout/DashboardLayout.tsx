@@ -192,9 +192,36 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         { id: "profile", name: "Profile", icon: User, href: "/client/profile" },
       ],
     },
+    MANAGER: {
+  name: "Manager Panel",
+  icon: Shield,
+  color: "bg-purple-500",
+  tabs: [
+    {
+      id: "overview",
+      name: "Overview",
+      icon: Home,
+      href: "/dashboard/overview",
+    },
+    {
+      id: "members",
+      name: "Members",
+      icon: Users,
+      href: "/dashboard/members",
+    },
+    {
+      id: "tour-packages",
+      name: "Tour Packages",
+      icon: Compass,
+      href: "/dashboard/tour-packages",
+    },
+  ],
+},
+
   };
 
-  const currentConfig = roleConfigs[userRole];
+const currentConfig =
+  roleConfigs[userRole] ?? roleConfigs["ADMIN"];
 
   // Close sidebar when route changes
   useEffect(() => {

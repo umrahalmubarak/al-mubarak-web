@@ -13,16 +13,22 @@ export default function AdminLayout({
   const { user } = useAuth();
 
   useEffect(() => {
-    if (!user) {
+    if (user === null) {
       window.location.href = "/login";
     }
   }, [user]);
+
+  // 🔥 Prevent crash during hydration
+  if (!user) {
+    return null; // or loading spinner
+  }
+
   return (
     <div>
-      {/* <ProtectedRoute> */}
       <Toaster />
-      <DashboardLayout userRole={user?.role as any}>{children}</DashboardLayout>
-      {/* </ProtectedRoute> */}
+      <DashboardLayout userRole={user.role as any}>
+        {children}
+      </DashboardLayout>
     </div>
   );
 }

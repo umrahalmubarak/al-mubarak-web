@@ -17,7 +17,7 @@ api.interceptors.request.use(
   (config) => {
       const token = useAuthStore.getState().token; // ✅ direct access to store state
     if (token) config.headers.Authorization = `Bearer ${token}`;
-    console.log("config", token);
+
     return config;
   },
   (error) => Promise.reject(error)
