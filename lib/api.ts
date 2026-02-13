@@ -3,9 +3,11 @@ import { useAuthStore } from "@/store/authStore";
 import axios from "axios";
 
 export const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+console.log("ENV URL:", process.env.NEXT_PUBLIC_API_URL);
+
 
 const api = axios.create({
-  baseURL: baseURL+'/v1',
+  baseURL: baseURL+'/api/v1',
   headers: {
     "Content-Type": "application/json",
   },
