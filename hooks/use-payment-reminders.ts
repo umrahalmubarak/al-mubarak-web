@@ -9,7 +9,7 @@ const QUERY_KEYS = {
   tourPackages: "tour-packages",
 } as const;
 
-// Hook to fetch tour members with pending payments
+// Hook to fetch tour members with pending payment
 export const usePaymentReminders = (filters: PaymentReminderFilters) => {
   return useQuery({
     queryKey: [QUERY_KEYS.paymentReminders, filters],
