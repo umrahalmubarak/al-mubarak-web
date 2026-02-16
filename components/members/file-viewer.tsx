@@ -100,7 +100,7 @@ export function FileViewer({ documents, memberName }: FileViewerProps) {
                     <IconComponent className="h-8 w-8 text-muted-foreground flex-shrink-0" />
                     <div className="min-w-0 flex-1">
                       <p className="font-medium truncate">
-                        {file?.filename.slice(0, 10)}
+                        {file?.originalName?.slice(0, 10) || "Document"}
                       </p>
                       <div className="flex items-center space-x-2 mt-1">
                         <Badge
@@ -132,12 +132,12 @@ export function FileViewer({ documents, memberName }: FileViewerProps) {
                         <DialogContent className="max-w-4xl">
                           <DialogHeader>
                             <DialogTitle>
-                              {file?.filename.slice(0, 10)}
+                              {file?.originalName?.slice(0, 10) ?? "Document"}
                             </DialogTitle>
                           </DialogHeader>
                           <div className="flex justify-center">
                             <img
-                              src={baseURL + "/" + file.path}
+                              src={file.url}
                               alt={file.filename}
                               className="max-w-full max-h-[70vh] object-contain"
                             />
