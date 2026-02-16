@@ -81,14 +81,14 @@ export function FileUpload({
             <input {...getInputProps()} />
             <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
             <p className="text-lg font-medium mb-2">
-              Drop files here or click to select
+              Drop images here or click to select
             </p>
             <p className="text-sm text-muted-foreground mb-4">
-              {multiple ? "Select multiple files" : "Select a file"} up to{" "}
+              {multiple ? "Select multiple images" : "Select a image"} up to{" "}
               {formatFileSize(maxSize)}
             </p>
             <Button type="button" variant="outline">
-              Choose Files
+              Choose images
             </Button>
           </div>
         </CardContent>
@@ -96,7 +96,7 @@ export function FileUpload({
 
       {files.length > 0 && (
         <div className="space-y-2">
-          <h4 className="font-medium">Selected Files ({files.length})</h4>
+          <h4 className="font-medium">Selected Images ({files.length})</h4>
           <div className="grid gap-2">
             {files.map((file, index) => (
               <Card key={index}>
