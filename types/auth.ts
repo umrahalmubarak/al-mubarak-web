@@ -2,7 +2,7 @@
 export interface User {
   id: string;
   email: string;
-  role: 'ADMIN' | 'USER';
+  role: 'ADMIN' | 'USER' | 'SUPERADMIN';
 }
 
 export interface LoginCredentials {

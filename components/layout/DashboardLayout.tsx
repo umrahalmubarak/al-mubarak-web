@@ -24,10 +24,10 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import imgLogo from "@/public/images/al_mubarak.jpg";
 import { useAuth } from "@/hooks/useAuth";
+import { useSystemStore } from "@/store/systemStore";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  userRole?: "ADMIN" | "STAFF" | "client";
 }
 
 interface TabConfig {
@@ -46,12 +46,12 @@ interface RoleConfig {
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   children,
-  userRole = "ADMIN",
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { logout } = useAuth();
+  const { logout , user } = useAuth();
+  const actualRole = user?.role;
   // Role configurations
   const roleConfigs: Record<string, RoleConfig> = {
     ADMIN: {
@@ -221,7 +221,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   };
 
 const currentConfig =
-  roleConfigs[userRole] ?? roleConfigs["ADMIN"];
+  roleConfigs[actualRole as keyof typeof roleConfigs]
 
   // Close sidebar when route changes
   useEffect(() => {
@@ -248,12 +248,19 @@ const currentConfig =
   };
 
   const isActiveRoute = (href: string) => {
-    if (href === `/${userRole}`) {
+    if (href === `/${actualRole}`) {
       return pathname === href;
     }
     return pathname.startsWith(href);
   };
-
+  const { businessName, logoUrl } = useSystemStore();
+  if (actualRole === "SUPERADMIN") {
+  return (
+    <div className="min-h-screen bg-gray-50 p-8">
+      {children}
+    </div>
+  );
+}
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile Sidebar Overlay */}
@@ -282,15 +289,17 @@ const currentConfig =
                 background={imgLogo.src}
               > */}
               {/* <currentConfig.icon className="w-6 h-6 text-white" /> */}
-              <img
-                src={imgLogo.src}
-                alt={currentConfig.name}
-                className={`w-10 h-10   bg-cover shadow-lg`}
-              />
+              {logoUrl && (
+                <img
+                  src={logoUrl}
+                  alt="Logo"
+                  className="h-10 w-10 object-contain"
+                />
+              )}
               {/* </div> */}
               <div>
                 <h2 className="text-lg font-bold text-gray-900">Dashboard</h2>
-                <p className="text-sm text-gray-500 capitalize">{userRole}</p>
+                <p className="text-sm text-gray-500 capitalize">{actualRole}</p>
               </div>
             </div>
             <button
@@ -364,7 +373,7 @@ const currentConfig =
                 {/* Breadcrumb */}
                 <div className="hidden sm:block">
                   <nav className="flex items-center space-x-2 text-sm text-gray-500">
-                    <span className="capitalize">{userRole}</span>
+                    <span className="capitalize">{actualRole}</span>
                     <span>/</span>
                     <span className="text-gray-900 font-medium">
                       {currentConfig.tabs.find((tab) => isActiveRoute(tab.href))
@@ -398,9 +407,9 @@ const currentConfig =
                 <div className="flex items-center space-x-3">
                   <div className="hidden sm:block text-right">
                     <p className="text-sm font-medium text-gray-900 capitalize">
-                      {userRole} USER
+                      {actualRole} USER
                     </p>
-                    {/* <p className="text-xs text-gray-500">{userRole.}</p> */}
+                    {/* <p className="text-xs text-gray-500">{actualRole.}</p> */}
                   </div>
                   <div
                     className={`w-9 h-9 ${currentConfig.color} rounded-full flex items-center justify-center shadow-lg`}
