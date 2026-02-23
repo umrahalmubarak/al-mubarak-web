@@ -40,7 +40,7 @@ export default function AdminLayout({
     <div>
       <Toaster />
       <DashboardLayout>
-        {children}
+        {children}      
       </DashboardLayout>
     </div>
   );
