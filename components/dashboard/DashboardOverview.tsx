@@ -25,6 +25,7 @@ import {
 import api from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 import logo from "@/public/images/al_mubarak.jpg";
+import { useSystemStore } from "@/store/systemStore";
 
 // Types for dashboard statistics
 interface DashboardStats {
@@ -84,6 +85,7 @@ const HoverValue: React.FC<HoverValueProps> = ({
   if (isLoading) {
     return <Skeleton className="h-8 w-24" />;
   }
+
 
   return (
     <div className="text-2xl font-bold hover:scale-105 transition-transform duration-200">
@@ -159,6 +161,7 @@ const PaymentStatusBadge: React.FC<PaymentStatusBadgeProps> = ({
 
   const config = statusConfig[status];
   const Icon = config.icon;
+  
 
   return (
     <Badge variant={config.variant} className="flex items-center gap-1">
@@ -183,16 +186,19 @@ const DashboardOverview: React.FC = () => {
   });
 
   const { user } = useAuth();
+  const { businessName, logoUrl } = useSystemStore();
 
   if (user.role !== "ADMIN") {
     return (
       <div className="flex items-center justify-center h-screen">
         <div>
-          <img
-            src={logo.src}
-            alt="Al-Mubarak Logo"
-            className="bg-cover h-52 w-52"
-          />
+         {logoUrl && (
+                <img
+                  src={logoUrl}
+                  alt={businessName}
+                  className="h-[40%] w-[] object-contain"
+                />
+          )}
         </div>
       </div>
     );

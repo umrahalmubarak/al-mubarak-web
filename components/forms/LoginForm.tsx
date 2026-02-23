@@ -26,15 +26,19 @@ import {
 import { Input } from "../ui/input";
 import Image from "next/image";
 import logo from "@/public/images/al_mubarak.jpg";
+import { useSystemStore } from "@/store/systemStore";
+import { useEffect } from "react";
+
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+
 export const LoginForm: React.FC = () => {
   const loginMutation = useLoginMutation();
   //   const { toast } = useToast();
-
+  const { businessName, logoUrl } = useSystemStore();
   const form = useForm<LoginCredentials>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -59,13 +63,13 @@ export const LoginForm: React.FC = () => {
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Section - Image */}
       <div className="relative w-full lg:w-1/2  flex-1 lg:h-screen ">
-        <Image
-          src={logo} // or "/login-bg.jpg" if you want static file
+        {logoUrl && (
+          <img
+          src={logoUrl} // or "/login-bg.jpg" if you want static file
           alt="Login background"
-          fill
           className="object-cover"
-          priority
         />
+        )}
         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
           <h1 className="text-4xl lg:text-5xl font-bold text-white drop-shadow-lg">
             Welcome Back!
