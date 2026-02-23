@@ -60,7 +60,7 @@ export const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="min-h-screen flex flex-col lg:flex-row overflow-hidden">
       {/* Left Section - Image */}
       <div className="relative w-full lg:w-1/2  flex-1 lg:h-screen ">
         {logoUrl && (
